@@ -58,6 +58,14 @@ public:
   bool isRoadSafe() const {
     return (length > 1000 && lanes >= 2); // Пример условия для безопасности дороги
   }
+
+  // Метод для расчета плотности движения на дороге
+  float calculateTrafficDensity() const {
+    if (length == 0 || lanes == 0) {
+      return 0.0f;
+    }
+    return static_cast<float>(lanes) / length; // Простой расчет плотности
+  }
 };
 
 int main() {
@@ -76,6 +84,9 @@ int main() {
   } else {
     std::cout << "Дорога не безопасна для движения." << std::endl;
   }
+
+  // Рассчитываем плотность движения
+  std::cout << "Плотность движения: " << road.calculateTrafficDensity() << " полос на метр" << std::endl;
 
   return 0;
 }
