@@ -123,6 +123,17 @@ public:
         }
         return static_cast<float>(length) / averageSpeed + delayTime;
     }
+
+    void analyzeThroughput(std::string timeOfDay, float trafficDensity) const {
+        std::cout << "Анализ пропускной способности дороги в " << timeOfDay << ":\n";
+        if (trafficDensity <= 0.5) {
+            std::cout << "Пропускная способность дороги высокая. Рекомендуется использовать эту дорогу.\n";
+        } else if (trafficDensity > 0.5 && trafficDensity <= 0.8) {
+            std::cout << "Пропускная способность дороги средняя. Рекомендуется осторожно выбирать эту дорогу.\n";
+        } else {
+            std::cout << "Пропускная способность дороги низкая. Рекомендуется по возможности избегать этой дороги.\n";
+        }
+    }
 };
 
 int main() {
@@ -134,40 +145,28 @@ int main() {
         std::cout << "Дорога безопасна для движения." << std::endl;
     } else {
         std::cout << "Дорога не безопасна для движения." << std::endl;
-    }
+}
 
-    std::cout << "Плотность движения: " << road.calculateTrafficDensity() << " полос на метр" << std::endl;
+std::cout << "Плотность движения: " << road.calculateTrafficDensity() << " полос на метр" << std::endl;
 
-    road.updateLength(1500);
-    road.updateLanes(3);
+road.updateLength(1500);
+road.updateLanes(3);
 
-    std::cout << "\nОбновленная информация о дороге:" << std::endl;
-    road.printInfo();
+std::cout << "\nОбновленная информация о дороге:" << std::endl;
+road.printInfo();
 
-    road.saveToFile("output.txt");
+road.saveToFile("output.txt");
 
-    float averageSpeed, delayTime;
-    std::cout << "Введите среднюю скорость движения (км/ч): ";
-    std::cin >> averageSpeed;
-    std::cout << "Введите время задержки на дороге (часы): ";
-    std::cin >> delayTime;
+float averageSpeed, delayTime;
+std::string timeOfDay;
+float trafficDensity;
 
-    float travelTime = road.calculateTravelTime(averageSpeed);
-    if (travelTime >= 0) {
-        std::cout << "Время проезда по дороге: " << travelTime << " часа(ов)" << std::endl;
-    }
+std::cout << "Введите время суток (утро, день, вечер, ночь): ";
+std::cin >> timeOfDay;
+std::cout << "Введите плотность движения на дороге (от 0 до 1): ";
+std::cin >> trafficDensity;
 
-    std::cout << "Пропускная способность дороги: " << road.calculateThroughput() << " автомобилей в час" << std::endl;
+road.analyzeThroughput(timeOfDay, trafficDensity);
 
-    std::cout << "Визуализация информации о дороге:\n";
-    road.visualizeRoad();
-
-    std::cout << "Тип дороги: " << road.getRoadType() << std::endl;
-
-    float travelTimeWithDelay = road.calculateTravelTimeWithDelay(averageSpeed, delayTime);
-    if (travelTimeWithDelay >= 0) {
-        std::cout << "Время в пути с учетом задержки: " << travelTimeWithDelay << " часа(ов)" << std::endl;
-    }
-
-    return 0;
+return 0;
 }
