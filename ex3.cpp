@@ -76,6 +76,19 @@ public:
   void updateLanes(int newLanes) {
     lanes = newLanes;
   }
+
+  // Метод для сохранения информации о дороге в файл
+  void saveToFile(const std::string& filename) const {
+    std::ofstream file(filename);
+    if (file.is_open()) {
+      file << length << std::endl;
+      file << lanes << std::endl;
+      file.close();
+      std::cout << "Информация о дороге успешно сохранена в файл: " << filename << std::endl;
+    } else {
+      std::cout << "Не удалось открыть файл для сохранения: " << filename << std::endl;
+    }
+  }
 };
 
 int main() {
@@ -105,6 +118,9 @@ int main() {
   // Выводим обновленную информацию о дороге
   std::cout << "\nОбновленная информация о дороге:" << std::endl;
   road.printInfo();
+
+  // Сохраняем информацию о дороге в файл
+  road.saveToFile("output.txt");
 
   return 0;
 }
