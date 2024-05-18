@@ -10,7 +10,7 @@ private:
 
 public:
   // Конструктор без параметров
-  Road() {}
+  Road() : length(0), lanes(0) {}
 
   // Метод для установки значений полей из файла
   void setValuesFromFile(const std::string& filename) {
@@ -66,6 +66,16 @@ public:
     }
     return static_cast<float>(lanes) / length; // Простой расчет плотности
   }
+
+  // Метод для обновления длины дороги
+  void updateLength(int newLength) {
+    length = newLength;
+  }
+
+  // Метод для обновления количества полос на дороге
+  void updateLanes(int newLanes) {
+    lanes = newLanes;
+  }
 };
 
 int main() {
@@ -87,6 +97,14 @@ int main() {
 
   // Рассчитываем плотность движения
   std::cout << "Плотность движения: " << road.calculateTrafficDensity() << " полос на метр" << std::endl;
+
+  // Обновляем информацию о дороге
+  road.updateLength(1500);
+  road.updateLanes(3);
+
+  // Выводим обновленную информацию о дороге
+  std::cout << "\nОбновленная информация о дороге:" << std::endl;
+  road.printInfo();
 
   return 0;
 }
