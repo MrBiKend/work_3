@@ -89,6 +89,14 @@ public:
       std::cout << "Не удалось открыть файл для сохранения: " << filename << std::endl;
     }
   }
+
+  // Метод для расчета времени проезда по дороге с учетом скорости движения
+  float calculateTravelTime(float speed) const {
+    if (speed <= 0) {
+      return -1.0f; // Возвращаем -1 в случае некорректной скорости
+    }
+    return static_cast<float>(length) / speed; // Расчет времени проезда
+  }
 };
 
 int main() {
@@ -121,6 +129,15 @@ int main() {
 
   // Сохраняем информацию о дороге в файл
   road.saveToFile("output.txt");
+
+  // Рассчитываем время проезда по дороге с заданной скоростью
+  float speed = 60.0f; // Скорость движения в км/ч
+  float travelTime = road.calculateTravelTime(speed);
+  if (travelTime >= 0) {
+    std::cout << "Время проезда по дороге при скорости " << speed << " км/ч: " << travelTime << " часов" << std::endl;
+  } else {
+    std::cout << "Некорректная скорость." << std::endl;
+  }
 
   return 0;
 }
