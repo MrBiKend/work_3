@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 // Класс дороги
 class Road {
@@ -14,10 +15,17 @@ public:
   // Метод для установки значений полей из файла
   void setValuesFromFile(const std::string& filename) {
     std::ifstream file(filename);
+    std::string line;
 
     if (file.is_open()) {
-      file >> length;
-      file >> lanes;
+      if (std::getline(file, line)) {
+        std::stringstream ss(line);
+        ss >> length;
+      }
+      if (std::getline(file, line)) {
+        std::stringstream ss(line);
+        ss >> lanes;
+      }
       file.close();
     } else {
       std::cout << "Не удалось открыть файл: " << filename << std::endl;
@@ -25,12 +33,12 @@ public:
   }
 
   // Метод для получения длины дороги
-  int getLength() {
+  int getLength() const {
     return length;
   }
 
   // Метод для получения количества полос на дороге
-  int getLanes() {
+  int getLanes() const {
     return lanes;
   }
 };
