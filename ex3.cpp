@@ -115,6 +115,14 @@ public:
             return "Обычная дорога";
         }
     }
+
+    float calculateTravelTimeWithDelay(float averageSpeed, float delayTime) const {
+        if (averageSpeed <= 0) {
+            std::cerr << "Средняя скорость должна быть положительной." << std::endl;
+            return -1.0f;
+        }
+        return static_cast<float>(length) / averageSpeed + delayTime;
+    }
 };
 
 int main() {
@@ -138,9 +146,11 @@ int main() {
 
     road.saveToFile("output.txt");
 
-    float averageSpeed;
+    float averageSpeed, delayTime;
     std::cout << "Введите среднюю скорость движения (км/ч): ";
     std::cin >> averageSpeed;
+    std::cout << "Введите время задержки на дороге (часы): ";
+    std::cin >> delayTime;
 
     float travelTime = road.calculateTravelTime(averageSpeed);
     if (travelTime >= 0) {
@@ -153,6 +163,11 @@ int main() {
     road.visualizeRoad();
 
     std::cout << "Тип дороги: " << road.getRoadType() << std::endl;
+
+    float travelTimeWithDelay = road.calculateTravelTimeWithDelay(averageSpeed, delayTime);
+    if (travelTimeWithDelay >= 0) {
+        std::cout << "Время в пути с учетом задержки: " << travelTimeWithDelay << " часа(ов)" << std::endl;
+    }
 
     return 0;
 }
