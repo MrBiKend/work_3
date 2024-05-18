@@ -89,6 +89,15 @@ public:
         }
         return static_cast<float>(length) / averageSpeed;
     }
+
+    // Новая функция: Расчет пропускной способности
+    float calculateThroughput() const {
+        if (lanes == 0) {
+            std::cerr << "Количество полос не может быть нулевым." << std::endl;
+            return -1.0f;
+        }
+        return lanes * 3600.0f / length; // Пропускная способность в автомобилях в час
+    }
 };
 
 int main() {
@@ -121,6 +130,9 @@ int main() {
     if (travelTime >= 0) {
         std::cout << "Время проезда по дороге: " << travelTime << " часа(ов)" << std::endl;
     }
+
+    // Добавим расчет пропускной способности
+    std::cout << "Пропускная способность дороги: " << road.calculateThroughput() << " автомобилей в час" << std::endl;
 
     return 0;
 }
